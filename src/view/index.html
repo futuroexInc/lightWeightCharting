@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>USDJPY.aa 1d</title>
+    <script src="../js/lightweight-charts.standalone.production.js"></script>
+    <script src="../js/usdjpy-ohlcv.js"></script>
+  </head>
+  <body>
+    <script>
+      const chart = LightweightCharts.createChart( document.body, {
+        width: 800, height: 600,
+        localization: { locale: 'ja-JP', dateFormat: 'yyyy/MM/dd', },
+        layout: { backgroundColor: 'orange', textColor: '#white', fontSize: 12, fontFamily: 'Ubuntu Mono', },
+        watermark: { color: 'rgba(11, 94, 29, 0.4)', visible: true, text: 'USDJPY.aa 1d 2019/09/28', fontSize: 48, horzAlign: 'center', vertAlign: 'center', },
+        crosshair: { mode: LightweightCharts.CrosshairMode.Normal, },
+      });
+
+      const candleSeries = chart.addCandlestickSeries( {
+        borderVisible: true, wickVisible: true,
+        upColor: 'black', downColor: 'white',
+        borderColor: 'black', wickColor: 'black',
+        borderUpColor: 'black', borderDownColor: 'black',
+        wickUpColor: "black", wickDownColor: "black",
+      } );
+
+      window.data = Object.keys( USDJPY_OHLCV.PERIOD_D1 ).map( e => USDJPY_OHLCV.PERIOD_D1[ e ] ).map( e => {
+        return { time: e.time, open: parseFloat( e.open ), high: parseFloat( e.high ), low: parseFloat( e.low ), close: parseFloat( e.close ) };
+      } );
+
+      candleSeries.setData(data);
+
+      const volumeSeries = chart.addHistogramSeries({
+        color: '#26a69a', lineWidth: 2, priceFormat: { type: 'volume', }, overlay: true, scaleMargins: { top: 0.8, bottom: 0, },
+      } );
+
+      const volume = Object.keys( USDJPY_OHLCV.PERIOD_D1 ).map( e => USDJPY_OHLCV.PERIOD_D1[ e ] ).map( e => {
+        return { time: e.time, value: parseFloat( e.volume ), color: 'rgba(255,255,255,128)' };
+      } );
+      volumeSeries.setData( volume );
+    </script>
+  </body>
+</html>
