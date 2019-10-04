@@ -23,20 +23,17 @@
         wickUpColor: "black", wickDownColor: "black",
       } );
 
-      window.data = Object.keys( USDJPY_OHLCV.PERIOD_D1 ).map( e => USDJPY_OHLCV.PERIOD_D1[ e ] ).map( e => {
+      candleSeries.setData( Object.keys( USDJPY_OHLCV.PERIOD_D1 ).map( e => USDJPY_OHLCV.PERIOD_D1[ e ] ).map( e => {
         return { time: e.time, open: parseFloat( e.open ), high: parseFloat( e.high ), low: parseFloat( e.low ), close: parseFloat( e.close ) };
-      } );
+      } ) );
 
-      candleSeries.setData(data);
-
-      const volumeSeries = chart.addHistogramSeries({
+      const volumeSeries = chart.addHistogramSeries( {
         color: '#26a69a', lineWidth: 2, priceFormat: { type: 'volume', }, overlay: true, scaleMargins: { top: 0.8, bottom: 0, },
       } );
 
-      const volume = Object.keys( USDJPY_OHLCV.PERIOD_D1 ).map( e => USDJPY_OHLCV.PERIOD_D1[ e ] ).map( e => {
+      volumeSeries.setData( Object.keys( USDJPY_OHLCV.PERIOD_D1 ).map( e => USDJPY_OHLCV.PERIOD_D1[ e ] ).map( e => {
         return { time: e.time, value: parseFloat( e.volume ), color: 'rgba(255,255,255,128)' };
-      } );
-      volumeSeries.setData( volume );
+      } ) );
     </script>
   </body>
 </html>
